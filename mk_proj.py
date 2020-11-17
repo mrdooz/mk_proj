@@ -57,12 +57,13 @@ except:
 # create the template files
 
 # create the main.cpp
-t = Template(file='templates/project.cpp.template', searchList=searchlist)
+script_dir = os.path.dirname(os.path.realpath(__file__))
+t = Template(file=os.path.join(script_dir, 'templates/project.cpp.template'), searchList=searchlist)
 open(os.path.join(output_dir, main + '.cpp'), 'wt').write(str(t))
 
 # create additional project files
 for base in ['project.sln', 'project.vcxproj', 'project.vcxproj.filters', 'project.vcxproj.user']:
-    src = os.path.join('templates', base + '.template')
+    src = os.path.join(script_dir, 'templates', base + '.template')
     dst = os.path.join(output_dir, base.replace('project', project_name))
     print('Parsing: %s to %s' % (src, dst))
     t = Template(file=src, searchList=searchlist)
